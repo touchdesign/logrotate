@@ -11,11 +11,15 @@
   "description": "Logrotate package",
   "require": {
     "php": "^7.2",
-    "symfony/filesystem": "^5.1"
+    "symfony/filesystem": "^5.1",
+    "symfony/finder": "^5.1"
   },
   "autoload": {
     "psr-4": {
       "Touchdesign\\Logrotate\\": "src/"
     }
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^5.1"
   }
 }
