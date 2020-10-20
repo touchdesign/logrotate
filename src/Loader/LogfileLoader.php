@@ -75,6 +75,17 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         return $this;
     }
 
+    public function remove(?int $version): self
+    {
+        $remove = $version
+            ? sprintf('%s.%d', $this->getPathname(), $version)
+            : $this->getPathname();
+
+        $this->filesystem->remove($remove);
+
+        return $this;
+    }
+
     public function isLogfile(\SplFileInfo $origin): bool
     {
         if (substr($origin->getFilename(), 0, strlen($this->getFilename())) != $this->getFilename()) {
@@ -99,7 +110,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
     {
         $rotated = $this->getPathname().'.'.$this->next($origin);
         if ($this->next($origin) === $keep) {
-            $this->filesystem->remove($rotated);
+            $this->remove($this->next($origin));
         }
 
         $this->filesystem->rename($origin->getPathname(), $rotated);
