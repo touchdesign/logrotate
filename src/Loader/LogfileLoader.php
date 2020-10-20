@@ -3,11 +3,13 @@
 namespace Touchdesign\Logrotate\Loader;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
+use Touchdesign\Logrotate\Loader\Exception\LoaderException;
 
 /**
  * @author Christin Gruber
  */
-class LogfileLoader extends \SplFileInfo
+class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
 {
     /**
      * @var Filesystem
@@ -15,26 +17,44 @@ class LogfileLoader extends \SplFileInfo
     protected $filesystem;
 
     /**
+     * @var Finder
+     */
+    protected $finder;
+
+    /**
      * @var string
      */
     protected $contents;
 
-    public function __construct($logfile)
+    public function __construct(string $origin)
     {
-        parent::__construct($logfile);
         $this->filesystem = new Filesystem();
+        try {
+            parent::__construct($origin);
+            if (!$this->isFile()) {
+                $this->truncate();
+            }
+        } catch(\Exception $exception) {
+            throw new LoaderException(
+                sprintf('Failed to create origin "%s" log file, maybe a permission issue.', $this->getPathname())
+            );
+        }
     }
 
-    public function getOctalPermissions(): string
+    public function find(): Finder
     {
-        return substr(sprintf('%o', $this->getPerms()), -4);
+        $this->finder = (new Finder())->in($this->getPath());
+
+        return $this->finder->files()
+            ->sortByName()
+            ->reverseSorting();
     }
 
-    public function applyOctalPermissons(int $mode): self
+    public function permissions(int $mode): self
     {
         if (octdec(decoct($mode)) != $mode) {
             throw new \InvalidArgumentException(
-                sprintf('Octal permissions should be in octal format like 0600.', $mode)
+                sprintf('Octal permissions "%s" should be in octal format like 0600.', $mode)
             );
         }
 
@@ -43,12 +63,12 @@ class LogfileLoader extends \SplFileInfo
         return $this;
     }
 
-    public function getContents(): string
+    public function contents(): string
     {
         return $this->contents = file_get_contents($this->getPathname());
     }
 
-    public function applyTruncate(): self
+    public function truncate(): self
     {
         $this->filesystem->dumpFile($this->getPathname(), false);
 
