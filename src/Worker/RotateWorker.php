@@ -26,7 +26,7 @@ class RotateWorker implements WorkerInterface
                 if ($this->loader->version($origin) < $keep) {
                     $this->loader->rotate($origin, $keep);
                 } elseif ($this->loader->version($origin) > $keep) {
-                    $this->remove($origin->getPathname());
+                    $this->loader->remove();
                 }
             }
         }
