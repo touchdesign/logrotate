@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Touchdesign\Logrotate\Loader;
 
 use Symfony\Component\Filesystem\Filesystem;
@@ -34,7 +36,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
             if (!$this->isFile()) {
                 $this->truncate();
             }
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             throw new LoaderException(
                 sprintf('Failed to create origin "%s" log file, maybe a permission issue.', $this->getPathname())
             );
@@ -54,7 +56,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
     {
         if (octdec(decoct($mode)) != $mode) {
             throw new \InvalidArgumentException(
-                sprintf('Octal permissions "%s" should be in octal format like 0600.', $mode)
+                sprintf('Permissions "%s" should be in octal format like 0600.', $mode)
             );
         }
 
@@ -88,7 +90,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
 
     public function isLogfile(\SplFileInfo $origin): bool
     {
-        if (substr($origin->getFilename(), 0, strlen($this->getFilename())) != $this->getFilename()) {
+        if (substr($origin->getFilename(), 0, \strlen($this->getFilename())) != $this->getFilename()) {
             return false;
         }
 
@@ -98,7 +100,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
     public function version(\SplFileInfo $origin): int
     {
         return $origin->getExtension() === $this->getExtension() ? 0
-            : $origin->getExtension();
+            : (int) $origin->getExtension();
     }
 
     public function next(\SplFileInfo $origin): int
