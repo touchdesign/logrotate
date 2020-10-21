@@ -24,11 +24,6 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
      */
     protected $finder;
 
-    /**
-     * @var string
-     */
-    protected $contents;
-
     public function __construct(string $origin)
     {
         $this->filesystem = new Filesystem();
@@ -37,6 +32,8 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
             if (!$this->isFile()) {
                 $this->truncate();
             }
+            $this->finder = (new FinderFactory($this))
+                ->create();
         } catch (\Exception $exception) {
             throw new LoaderException(
                 sprintf('Failed to create origin "%s" log file, maybe a permission issue.', $this->getPathname())
@@ -46,16 +43,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
 
     public function find(): Finder
     {
-        $this->finder = (new Finder())->in($this->getPath());
-
-        return $this->finder->files()
-            ->filter(
-                function (\SplFileInfo $origin) {
-                    return substr($origin->getFilename(), 0, \strlen($this->getFilename())) == $this->getFilename();
-                }
-            )
-            ->sortByName()
-            ->reverseSorting();
+        return $this->finder;
     }
 
     public function permissions(int $mode): self
@@ -87,15 +75,6 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         $this->filesystem->remove($remove);
 
         return $this;
-    }
-
-    public function isLogfile(\SplFileInfo $origin): bool
-    {
-        if (substr($origin->getFilename(), 0, \strlen($this->getFilename())) != $this->getFilename()) {
-            return false;
-        }
-
-        return true;
     }
 
     public function version(\SplFileInfo $origin): int
