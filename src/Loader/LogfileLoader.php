@@ -6,6 +6,7 @@ namespace Touchdesign\Logrotate\Loader;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Touchdesign\Logrotate\Loader\Exception\InvalidArgumentException;
 use Touchdesign\Logrotate\Loader\Exception\LoaderException;
 
 /**
@@ -55,7 +56,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
     public function permissions(int $mode): self
     {
         if (octdec(decoct($mode)) != $mode) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf('Permissions "%s" should be in octal format like 0600.', $mode)
             );
         }
