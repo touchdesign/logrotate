@@ -23,17 +23,17 @@ class RotateWorker implements WorkerInterface
 
     public function run(int $keep = 3): bool
     {
-        foreach ($this->loader->find() as $origin) {
-            if ($this->loader->isLogfile($origin)) {
+        try {
+            foreach ($this->loader->find() as $origin) {
                 if ($this->loader->version($origin) < $keep) {
                     $this->loader->rotate($origin, $keep);
                 } elseif ($this->loader->version($origin) > $keep) {
                     $this->loader->remove();
                 }
             }
+        } finally {
+            $this->loader->truncate();
         }
-
-        $this->loader->truncate();
 
         return true;
     }

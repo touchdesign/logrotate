@@ -24,11 +24,9 @@ class PurgeWorker implements WorkerInterface
     public function run(): bool
     {
         foreach ($this->loader->find() as $origin) {
-            if ($this->loader->isLogfile($origin)) {
-                $this->loader->remove(
-                    $this->loader->version($origin)
-                );
-            }
+            $this->loader->remove(
+                $this->loader->version($origin)
+            );
         }
 
         return true;
