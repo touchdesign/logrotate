@@ -49,6 +49,11 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         $this->finder = (new Finder())->in($this->getPath());
 
         return $this->finder->files()
+            ->filter(
+                function (\SplFileInfo $origin) {
+                    return substr($origin->getFilename(), 0, \strlen($this->getFilename())) == $this->getFilename();
+                }
+            )
             ->sortByName()
             ->reverseSorting();
     }
@@ -64,11 +69,6 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         $this->filesystem->chmod($this->getPathname(), $mode);
 
         return $this;
-    }
-
-    public function contents(): string
-    {
-        return $this->contents = file_get_contents($this->getPathname());
     }
 
     public function truncate(): self
