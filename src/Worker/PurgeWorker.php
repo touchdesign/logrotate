@@ -23,7 +23,7 @@ class PurgeWorker implements WorkerInterface
 
     public function run(): bool
     {
-        foreach ($this->loader->find() as $origin) {
+        foreach ($this->loader->all() as $origin) {
             $this->loader->remove(
                 $this->loader->version($origin)
             );

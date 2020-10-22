@@ -9,7 +9,7 @@ use Symfony\Component\Finder\Finder;
 /**
  * @author Christin Gruber
  */
-class FinderFactory
+class FinderFactory implements FinderFactoryInterface
 {
     /**
      * @var LogfileLoaderInterface
