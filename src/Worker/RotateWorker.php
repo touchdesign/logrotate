@@ -24,7 +24,7 @@ class RotateWorker implements WorkerInterface
     public function run(int $keep = 3): bool
     {
         try {
-            foreach ($this->loader->find() as $origin) {
+            foreach ($this->loader->all() as $origin) {
                 if ($this->loader->version($origin) < $keep) {
                     $this->loader->rotate($origin, $keep);
                 } elseif ($this->loader->version($origin) > $keep) {

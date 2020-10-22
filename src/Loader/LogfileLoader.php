@@ -41,9 +41,9 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         }
     }
 
-    public function find(): Finder
+    public function all(): ?\Iterator
     {
-        return $this->finder;
+        return $this->finder->getIterator() ?? null;
     }
 
     public function permissions(int $mode): self
