@@ -24,6 +24,7 @@ class FinderFactory implements FinderFactoryInterface
     public function create(): Finder
     {
         return (new Finder())->in($this->loader->getPath())
+            ->depth(0)
             ->files()
             ->filter(
                 function (\SplFileInfo $current) {
