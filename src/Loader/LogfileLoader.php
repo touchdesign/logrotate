@@ -24,7 +24,12 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
      */
     protected $finder;
 
-    public function __construct(string $origin)
+    /**
+     * @var string
+     */
+    private $mode;
+
+    public function __construct(string $origin, int $mode = null)
     {
         $this->filesystem = new Filesystem();
         try {
@@ -34,6 +39,12 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
             }
             $this->finder = (new FinderFactory($this))
                 ->create();
+            if ($mode && octdec(decoct($mode)) != $mode) {
+                throw new InvalidArgumentException(
+                    sprintf('Permissions "%s" should be in octal format like 0600.', $mode)
+                );
+            }
+            $this->mode = $mode;
         } catch (\Exception $exception) {
             throw new LoaderException(
                 sprintf('Failed to create origin "%s" log file, maybe a permission issue.', $this->getPathname())
@@ -46,22 +57,12 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         return $this->finder->getIterator() ?? null;
     }
 
-    public function permissions(int $mode): self
-    {
-        if (octdec(decoct($mode)) != $mode) {
-            throw new InvalidArgumentException(
-                sprintf('Permissions "%s" should be in octal format like 0600.', $mode)
-            );
-        }
-
-        $this->filesystem->chmod($this->getPathname(), $mode);
-
-        return $this;
-    }
-
     public function truncate(): self
     {
         $this->filesystem->dumpFile($this->getPathname(), false);
+        if ($this->mode) {
+            $this->filesystem->chmod($this->getPathname(), $this->mode);
+        }
 
         return $this;
     }
@@ -93,6 +94,10 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         $rotated = $this->getPathname().'.'.$this->next($origin);
         if ($this->next($origin) === $keep) {
             $this->remove($this->next($origin));
+        }
+
+        if ($this->mode) {
+            $this->filesystem->chmod($this->getPathname(), $this->mode);
         }
 
         $this->filesystem->rename($origin->getPathname(), $rotated);
