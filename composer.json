@@ -30,6 +30,7 @@
   },
   "scripts": {
     "tests": "./vendor/bin/phpunit tests",
-    "phpcs": "phpcs --standard=phpcs.xml *"
+    "phpcs": "phpcs --standard=phpcs.xml *",
+    "phpcbf": "phpcbf --standard=phpcs.xml *"
   }
 }
