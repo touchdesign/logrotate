@@ -12,5 +12,6 @@ use Touchdesign\Logrotate\Loader\LogfileLoaderInterface;
 interface WorkerInterface
 {
     public function __construct(LogfileLoaderInterface $loader);
+
     public function run(): bool;
 }
