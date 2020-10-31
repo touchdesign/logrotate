@@ -27,7 +27,8 @@ class FinderFactory implements FinderFactoryInterface
             ->files()
             ->filter(
                 function (\SplFileInfo $current) {
-                    return substr($current->getFilename(), 0, \strlen($this->loader->getFilename())) == $this->loader->getFilename();
+                    return substr($current->getFilename(), 0, \strlen($this->loader->getFilename()))
+                        == $this->loader->getFilename();
                 }
             )
             ->sortByName()
