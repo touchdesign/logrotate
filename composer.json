@@ -19,6 +19,11 @@
       "Touchdesign\\Logrotate\\": "src/"
     }
   },
+  "autoload-dev":{
+    "psr-4": {
+      "Touchdesign\\Logrotate\\Tests\\": "tests/"
+    }
+  },
   "require-dev": {
     "symfony/var-dumper": "^5.1",
     "phpunit/phpunit": "^8.5"
