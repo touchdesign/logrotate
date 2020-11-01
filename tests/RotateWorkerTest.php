@@ -18,7 +18,7 @@ final class RotateWorkerTest extends AbstractBaseTest
         $this->assertStringEqualsFile($this->filesystem->url().'/logs/foo.log', self::CONTENT);
 
         $rotate = new RotateWorker(
-            (new LogfileLoader($this->filesystem->url().'/logs/foo.log'))
+            $loader = (new LogfileLoader($this->filesystem->url().'/logs/foo.log'))
         );
         $rotate->run(1);
 
@@ -27,5 +27,9 @@ final class RotateWorkerTest extends AbstractBaseTest
         $this->assertStringEqualsFile($this->filesystem->url().'/logs/foo.log', self::BLANK);
         $this->assertStringEqualsFile($this->filesystem->url().'/logs/foo.log.1', self::CONTENT);
         $this->assertStringEqualsFile($this->filesystem->url().'/logs/bar.log', self::CONTENT);
+
+        $rotate->run(1);
+
+        $this->assertEquals(2, \iterator_count($loader->all()));
     }
 }
