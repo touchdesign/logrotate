@@ -9,7 +9,7 @@ use Touchdesign\Logrotate\Loader\LogfileLoader;
 /**
  * @author Christin Gruber
  */
-final class TruncateTest extends AbstractBaseTest
+final class LogfileLoaderTest extends AbstractBaseTest
 {
     public function testSingle(): void
     {
