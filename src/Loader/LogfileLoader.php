@@ -22,12 +22,12 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
     /**
      * @var Filesystem
      */
-    protected $filesystem;
+    protected Filesystem $filesystem;
 
     /**
      * @var Finder
      */
-    protected $finder;
+    protected Finder $finder;
 
     /**
      * @var Logger
@@ -35,9 +35,9 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
     protected $logger;
 
     /**
-     * @var string
+     * @var int Octal file mode
      */
-    private $mode;
+    private ?int $mode;
 
     public function __construct(string $origin, int $mode = null)
     {
