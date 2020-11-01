@@ -9,7 +9,7 @@ namespace Touchdesign\Logrotate\Loader;
  */
 interface LogfileLoaderInterface
 {
-    public function __construct(string $logfile);
+    public function __construct(string $logfile, int $mode);
 
     public function all(): ?\Iterator;
 }
