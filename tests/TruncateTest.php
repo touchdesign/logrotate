@@ -4,33 +4,13 @@ declare(strict_types=1);
 
 namespace Touchdesign\Logrotate\Tests;
 
-use org\bovigo\vfs\vfsStream;
-use PHPUnit\Framework\TestCase;
 use Touchdesign\Logrotate\Loader\LogfileLoader;
 
 /**
  * @author Christin Gruber
  */
-final class TruncateTest extends TestCase
+final class TruncateTest extends AbstractBaseTest
 {
-    const CONTENT = 'HelloContent';
-    const BLANK = '';
-
-    /**
-     * @vfsStream virtual file system
-     */
-    private $filesystem;
-
-    public function setUp(): void
-    {
-        $this->filesystem = vfsStream::setup('root', 0644, [
-            'logs' => [
-                'foo.log' => self::CONTENT,
-                'bar.log' => self::CONTENT,
-            ],
-        ]);
-    }
-
     public function testSingle(): void
     {
         $this->assertStringEqualsFile($this->filesystem->url().'/logs/foo.log', self::CONTENT);
