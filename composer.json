@@ -19,7 +19,19 @@
       "Touchdesign\\Logrotate\\": "src/"
     }
   },
+  "autoload-dev":{
+    "psr-4": {
+      "Touchdesign\\Logrotate\\Tests\\": "tests/"
+    }
+  },
   "require-dev": {
-    "symfony/var-dumper": "^5.1"
+    "symfony/var-dumper": "^5.1",
+    "phpunit/phpunit": "^8.5",
+    "mikey179/vfsstream": "^1.6"
+  },
+  "scripts": {
+    "tests": "./vendor/bin/phpunit tests",
+    "phpcs": "phpcs --standard=phpcs.xml *",
+    "phpcbf": "phpcbf --standard=phpcs.xml *"
   }
 }

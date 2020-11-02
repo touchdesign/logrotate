@@ -1,0 +1,15 @@
+name: "CI"
+
+on: [pull_request]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    container:
+      image:  prooph/composer:7.2
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install vendors
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+      - name: Unit tests
+        run: composer tests
