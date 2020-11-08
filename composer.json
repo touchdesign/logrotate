@@ -29,11 +29,12 @@
   "require-dev": {
     "symfony/var-dumper": "^5.1",
     "phpunit/phpunit": "^8.5",
-    "mikey179/vfsstream": "^1.6"
+    "mikey179/vfsstream": "^1.6",
+    "squizlabs/php_codesniffer": "^3.5"
   },
   "scripts": {
     "tests": "./vendor/bin/phpunit tests",
-    "phpcs": "phpcs --standard=phpcs.xml *",
-    "phpcbf": "phpcbf --standard=phpcs.xml *"
+    "lint:php": "phpcs --standard=phpcs.xml *",
+    "fix:php": "phpcbf --standard=phpcs.xml *"
   }
 }
