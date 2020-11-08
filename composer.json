@@ -12,7 +12,9 @@
   "require": {
     "php": "^7.2",
     "symfony/filesystem": "^5.1",
-    "symfony/finder": "^5.1"
+    "symfony/finder": "^5.1",
+    "symfony/monolog-bundle": "^3.6",
+    "monolog/monolog": "^2.1"
   },
   "autoload": {
     "psr-4": {

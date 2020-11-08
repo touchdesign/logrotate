@@ -12,4 +12,10 @@ interface LogfileLoaderInterface
     public function __construct(string $logfile, int $mode);
 
     public function all(): ?\Iterator;
+
+    public function truncate(): self;
+
+    public function remove(?int $version): self;
+
+    public function rotate(\SplFileInfo $origin, int $keep = 3): string;
 }
