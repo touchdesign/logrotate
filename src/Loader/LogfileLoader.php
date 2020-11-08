@@ -4,15 +4,21 @@ declare(strict_types=1);
 
 namespace Touchdesign\Logrotate\Loader;
 
+use Monolog\Logger;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Touchdesign\Logrotate\Loader\Exception\LoaderException;
+use Touchdesign\Logrotate\Logger\Traits\LoggableTrait;
 
 /**
  * @author Christin Gruber
  */
 class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
 {
+    use LoggableTrait {
+        LoggableTrait::__construct as protected __loggable;
+    }
+
     /**
      * @var Filesystem
      */
@@ -24,6 +30,11 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
     protected $finder;
 
     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
      * @var string
      */
     private $mode;
@@ -33,6 +44,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         $this->filesystem = new Filesystem();
         try {
             parent::__construct($origin);
+            $this->__loggable();
             if (!$this->isFile()) {
                 $this->truncate();
             }
@@ -53,6 +65,8 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
 
     public function truncate(): self
     {
+        $this->logger->debug('Truncate log '.$this->getPathname());
+
         $this->filesystem->dumpFile($this->getPathname(), false);
         if ($this->mode) {
             $this->filesystem->chmod($this->getPathname(), $this->mode);
@@ -66,6 +80,8 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         $remove = $version
             ? sprintf('%s.%d', $this->getPathname(), $version)
             : $this->getPathname();
+
+        $this->logger->debug('Remove log '.$remove);
 
         $this->filesystem->remove($remove);
 
@@ -85,6 +101,8 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
 
     public function rotate(\SplFileInfo $origin, int $keep = 3): string
     {
+        $this->logger->info('Rotate log '.$origin);
+
         $rotated = $this->getPathname().'.'.$this->next($origin);
         if ($this->next($origin) === $keep) {
             $this->remove($this->next($origin));
