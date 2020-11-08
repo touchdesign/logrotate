@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Touchdesign\Logrotate\Logger\Traits;
 
-use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Touchdesign\Logrotate\Logger\LoggerFactory;
 
 /**
@@ -20,7 +20,7 @@ trait LoggableTrait
             ->create();
     }
 
-    public function setLogger(Logger $logger): self
+    public function setLogger(LoggerInterface $logger): self
     {
         $this->logger = $logger;
 

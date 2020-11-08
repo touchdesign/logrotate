@@ -63,7 +63,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         return $this->finder->getIterator() ?? null;
     }
 
-    public function truncate(): self
+    public function truncate(): LogfileLoaderInterface
     {
         $this->logger->debug('Truncate log '.$this->getPathname());
 
@@ -75,7 +75,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         return $this;
     }
 
-    public function remove(?int $version): self
+    public function remove(?int $version): LogfileLoaderInterface
     {
         $remove = $version
             ? sprintf('%s.%d', $this->getPathname(), $version)

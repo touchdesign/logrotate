@@ -25,7 +25,7 @@ class LoggerFactory implements LoggerFactoryInterface
         }
     }
 
-    public function addHandler(HandlerInterface $handler): self
+    public function addHandler(HandlerInterface $handler): LoggerFactoryInterface
     {
         if (!$handler instanceof HandlerInterface) {
             throw new InvalidArgumentException(
