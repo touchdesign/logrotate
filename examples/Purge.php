@@ -10,8 +10,8 @@ require_once '../vendor/autoload.php';
 use Touchdesign\Logrotate\Loader\LogfileLoader;
 use Touchdesign\Logrotate\Worker\PurgeWorker;
 
-$purge = new PurgeWorker(
+$worker = new PurgeWorker(
     (new LogfileLoader('/tmp/logfile.log'))
 );
 
-$purge->run();
+$worker->run();

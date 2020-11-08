@@ -10,8 +10,8 @@ require_once '../vendor/autoload.php';
 use Touchdesign\Logrotate\Loader\LogfileLoader;
 use Touchdesign\Logrotate\Worker\RotateWorker;
 
-$rotate = new RotateWorker(
-    (new LogfileLoader('/tmp/logfile.log'))
+$worker = new RotateWorker(
+    $loader = (new LogfileLoader('/tmp/logfile.log'))
 );
 
-$rotate->run(3);
+$worker->run(3);
