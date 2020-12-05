@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Touchdesign\Logrotate\Loader;
 
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Touchdesign\Logrotate\Loader\Exception\LoaderException;
@@ -22,27 +23,23 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
     /**
      * @var Filesystem
      */
-    protected $filesystem;
+    protected Filesystem $filesystem;
 
     /**
      * @var Finder
      */
-    protected $finder;
+    protected Finder $finder;
 
     /**
-     * @var Logger
+     * @var int Octal file mode
      */
-    protected $logger;
-
-    /**
-     * @var string
-     */
-    private $mode;
+    private ?int $mode;
 
     public function __construct(string $origin, int $mode = null)
     {
         $this->filesystem = new Filesystem();
         try {
+            $this->mode = $mode;
             parent::__construct($origin);
             $this->__loggable();
             if (!$this->isFile()) {
@@ -50,7 +47,6 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
             }
             $this->finder = (new FinderFactory($this))
                 ->create();
-            $this->mode = $mode;
         } catch (\Exception $exception) {
             throw new LoaderException(
                 sprintf('Failed to create origin "%s" log file, maybe a permission issue.', $this->getPathname())
@@ -75,7 +71,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         return $this;
     }
 
-    public function remove(?int $version): LogfileLoaderInterface
+    public function remove(?int $version = null): LogfileLoaderInterface
     {
         $remove = $version
             ? sprintf('%s.%d', $this->getPathname(), $version)

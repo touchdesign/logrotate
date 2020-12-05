@@ -16,7 +16,7 @@ class LoggerFactory implements LoggerFactoryInterface
     /**
      * @var HandlerInterface[]
      */
-    private $handlers = [];
+    private array $handlers = [];
 
     public function __construct(array $handlers = [])
     {

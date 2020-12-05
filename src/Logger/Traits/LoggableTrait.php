@@ -12,7 +12,7 @@ use Touchdesign\Logrotate\Logger\LoggerFactory;
  */
 trait LoggableTrait
 {
-    protected $logger;
+    protected LoggerInterface $logger;
 
     public function __construct()
     {

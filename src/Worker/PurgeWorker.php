@@ -14,7 +14,7 @@ class PurgeWorker implements WorkerInterface
     /**
      * @var LogfileLoaderInterface
      */
-    private $loader;
+    private LogfileLoaderInterface $loader;
 
     public function __construct(LogfileLoaderInterface $loader)
     {

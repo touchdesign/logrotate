@@ -17,3 +17,5 @@
     );
     
     $purge->run();
+
+For more examples take a look at examples folder.
