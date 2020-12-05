@@ -71,7 +71,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         return $this;
     }
 
-    public function remove(?int $version): LogfileLoaderInterface
+    public function remove(?int $version = null): LogfileLoaderInterface
     {
         $remove = $version
             ? sprintf('%s.%d', $this->getPathname(), $version)

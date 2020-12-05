@@ -15,7 +15,7 @@ interface LogfileLoaderInterface
 
     public function truncate(): self;
 
-    public function remove(?int $version): self;
+    public function remove(?int $version = null): self;
 
     public function rotate(\SplFileInfo $origin, int $keep = 3): string;
 }
