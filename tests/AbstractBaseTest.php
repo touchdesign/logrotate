@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Touchdesign\Logrotate\Tests;
 
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,7 +19,7 @@ abstract class AbstractBaseTest extends TestCase
     /**
      * @vfsStream virtual file system
      */
-    protected $filesystem;
+    protected vfsStreamDirectory $filesystem;
 
     public function setUp(): void
     {
