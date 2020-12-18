@@ -31,7 +31,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
     protected Finder $finder;
 
     /**
-     * @var int Octal file mode
+     * @var int|null Octal file mode
      */
     private ?int $mode;
 
@@ -49,7 +49,10 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
                 ->create();
         } catch (\Exception $exception) {
             throw new LoaderException(
-                sprintf('Failed to create origin "%s" log file, maybe a permission issue.', $this->getPathname())
+                sprintf(
+                    'Failed to create origin "%s" log file, maybe a permission issue.',
+                    $this->getPathname()
+                )
             );
         }
     }
