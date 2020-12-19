@@ -1,4 +1,7 @@
 /.private/
 /.idea/
+/build/
+/tools/
 /vendor/
 /.php_cs.cache
+/.phpunit.result.cache

@@ -28,13 +28,12 @@
   },
   "require-dev": {
     "symfony/var-dumper": "^5.2",
-    "phpunit/phpunit": "^8.5",
     "mikey179/vfsstream": "^1.6",
-    "squizlabs/php_codesniffer": "^3.5"
+    "phpunit/phpunit": "^9.5"
   },
   "scripts": {
-    "tests": "./vendor/bin/phpunit tests",
-    "lint:php": "phpcs --standard=phpcs.xml *",
-    "fix:php": "phpcbf --standard=phpcs.xml *"
+    "tests": "./tools/phpunit tests",
+    "lint:php": "./tools/phpcs --standard=phpcs.xml *",
+    "fix:php": "./tools/phpcbf --standard=phpcs.xml *"
   }
 }
