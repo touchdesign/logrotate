@@ -10,9 +10,11 @@
   "keywords": [],
   "description": "Logrotate package",
   "require": {
-    "php": "^7.2",
-    "symfony/filesystem": "^5.1",
-    "symfony/finder": "^5.1"
+    "php": ">=7.4",
+    "symfony/filesystem": "^5.2",
+    "symfony/finder": "^5.2",
+    "symfony/monolog-bundle": "^3.6",
+    "monolog/monolog": "^2.1"
   },
   "autoload": {
     "psr-4": {
@@ -25,13 +27,13 @@
     }
   },
   "require-dev": {
-    "symfony/var-dumper": "^5.1",
-    "phpunit/phpunit": "^8.5",
-    "mikey179/vfsstream": "^1.6"
+    "symfony/var-dumper": "^5.2",
+    "mikey179/vfsstream": "^1.6",
+    "phpunit/phpunit": "^9.5"
   },
   "scripts": {
-    "tests": "./vendor/bin/phpunit tests",
-    "phpcs": "phpcs --standard=phpcs.xml *",
-    "phpcbf": "phpcbf --standard=phpcs.xml *"
+    "tests": "./tools/phpunit tests",
+    "lint:php": "./tools/phpcs --standard=phpcs.xml *",
+    "fix:php": "./tools/phpcbf --standard=phpcs.xml *"
   }
 }

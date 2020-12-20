@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Touchdesign\Logrotate\Worker\Exception;
+namespace Touchdesign\Logrotate\Logger\Exception;
 
 /**
  * @author Christin Gruber <c.gruber@touchdesign.de>

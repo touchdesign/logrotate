@@ -2,16 +2,22 @@
 
 declare(strict_types=1);
 
-/**
- * @author Christin Gruber
+/*
+ * This file is a part of logrotate package.
+ *
+ * Copyright (c) 2020 Christin Gruber <c.gruber@touchdesign.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-require_once '../vendor/autoload.php';
+
+require_once __DIR__.'/../vendor/autoload.php';
 
 use Touchdesign\Logrotate\Loader\LogfileLoader;
 use Touchdesign\Logrotate\Worker\PurgeWorker;
 
-$purge = new PurgeWorker(
+$worker = new PurgeWorker(
     (new LogfileLoader('/tmp/logfile.log'))
 );
 
-$purge->run();
+$worker->run();

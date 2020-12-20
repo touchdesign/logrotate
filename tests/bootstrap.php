@@ -11,11 +11,4 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Touchdesign\Logrotate\Worker\Exception;
-
-/**
- * @author Christin Gruber <c.gruber@touchdesign.de>
- */
-class InvalidArgumentException extends \InvalidArgumentException
-{
-}
+require __DIR__.'/../vendor/autoload.php';
