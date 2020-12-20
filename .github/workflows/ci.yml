@@ -1,18 +1,29 @@
 name: "CI:LintAndTest"
 
-on: [pull_request]
+on:
+  - pull_request
+  - push
 
 jobs:
-  run-phpunit:
+  run-tests:
     runs-on: ubuntu-latest
-    container:
-      image:  prooph/composer:7.4
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Setup PHP box
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          coverage: none
+          tools: phive
+      - name: Show setup
+        run: php -v && phpive version && composer --version
       - name: Install vendors
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+      - name: Install toolsBBAB 5DF0 A0D6 6729 89CF 1869 E82B 2FB3 14E9 906E
+        run: phive install -v --trust-gpg-keys 4AA394086372C20A,31C7E470E2138192,8E730BA25823D8B5,CF1A108D0E7AE720
       - name: Lint php
         run: composer lint:php
       - name: Unit tests
