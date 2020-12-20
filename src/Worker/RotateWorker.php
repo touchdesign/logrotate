@@ -2,19 +2,25 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is a part of logrotate package.
+ *
+ * Copyright (c) 2020 Christin Gruber <c.gruber@touchdesign.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Touchdesign\Logrotate\Worker;
 
 use Touchdesign\Logrotate\Loader\LogfileLoaderInterface;
 use Touchdesign\Logrotate\Worker\Exception\InvalidArgumentException;
 
 /**
- * @author Christin Gruber
+ * @author Christin Gruber <c.gruber@touchdesign.de>
  */
 class RotateWorker implements WorkerInterface
 {
-    /**
-     * @var LogfileLoaderInterface
-     */
     private LogfileLoaderInterface $loader;
 
     public function __construct(LogfileLoaderInterface $loader)
@@ -25,9 +31,7 @@ class RotateWorker implements WorkerInterface
     public function run(int $keep = 3): bool
     {
         if ($keep < 1) {
-            throw new InvalidArgumentException(
-                'Keep should be greater than one, to truncate a logfile use taskTruncateLog($logfile).'
-            );
+            throw new InvalidArgumentException('Keep should be greater than one, to truncate a logfile use taskTruncateLog($logfile).');
         }
 
         try {

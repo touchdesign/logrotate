@@ -2,17 +2,24 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is a part of logrotate package.
+ *
+ * Copyright (c) 2020 Christin Gruber <c.gruber@touchdesign.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Touchdesign\Logrotate\Loader;
 
-use Monolog\Logger;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Touchdesign\Logrotate\Loader\Exception\LoaderException;
 use Touchdesign\Logrotate\Logger\Traits\LoggableTrait;
 
 /**
- * @author Christin Gruber
+ * @author Christin Gruber <c.gruber@touchdesign.de>
  */
 class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
 {
@@ -20,14 +27,8 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
         LoggableTrait::__construct as protected __loggable;
     }
 
-    /**
-     * @var Filesystem
-     */
     protected Filesystem $filesystem;
 
-    /**
-     * @var Finder
-     */
     protected Finder $finder;
 
     /**
@@ -48,12 +49,7 @@ class LogfileLoader extends \SplFileInfo implements LogfileLoaderInterface
             $this->finder = (new FinderFactory($this))
                 ->create();
         } catch (\Exception $exception) {
-            throw new LoaderException(
-                sprintf(
-                    'Failed to create origin "%s" log file, maybe a permission issue.',
-                    $this->getPathname()
-                )
-            );
+            throw new LoaderException(sprintf('Failed to create origin "%s" log file, maybe a permission issue.', $this->getPathname()));
         }
     }
 
