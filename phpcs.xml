@@ -9,6 +9,7 @@
     <rule ref="PSR1"/>
     <rule ref="PSR2"/>
     <!-- Excludes  -->
+    <exclude-pattern>/build/</exclude-pattern>
     <exclude-pattern>/var/</exclude-pattern>
     <exclude-pattern>/vendor/</exclude-pattern>
 </ruleset>
