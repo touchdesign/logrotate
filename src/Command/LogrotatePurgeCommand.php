@@ -52,7 +52,7 @@ class LogrotatePurgeCommand extends Command
         );
 
         if ($count = $loader->all()->count()) {
-            if (!$io->confirm(
+            if (!$input->isInteractive() && !$io->confirm(
                 sprintf(
                     'Sure you will purge "%d" log files for "%s"?',
                     $count,
