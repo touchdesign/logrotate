@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.0.0
+
+ * Added console commands
+
 ## Version 1.0.0-beta2
 
  * Added logger handling

@@ -33,6 +33,6 @@ return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
     ->setFinder(
         PhpCsFixer\Finder::create()
-            ->in([__DIR__.'/src', __DIR__.'/tests', __DIR__.'/examples'])
+            ->in([__DIR__.'/src', __DIR__.'/tests', __DIR__.'/examples', __DIR__.'/bin'])
             ->notPath('#/Fixtures/#')
     );

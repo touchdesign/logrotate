@@ -35,7 +35,3 @@ $purge->run();
 ```
 
 For more examples take a look at the example folder in this repository.
-
-## Symfony bundle
-
-For a symfony console integration see [logrotate-bundle](https://github.com/touchdesign/logrotate-bundle)

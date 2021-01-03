@@ -21,6 +21,8 @@ use Touchdesign\Logrotate\Worker\Exception\InvalidArgumentException;
  */
 class RotateWorker implements WorkerInterface
 {
+    public const KEEP = 3;
+
     private LogfileLoaderInterface $loader;
 
     public function __construct(LogfileLoaderInterface $loader)
@@ -28,7 +30,7 @@ class RotateWorker implements WorkerInterface
         $this->loader = $loader;
     }
 
-    public function run(int $keep = 3): bool
+    public function run(int $keep = self::KEEP): bool
     {
         if ($keep < 1) {
             throw new InvalidArgumentException('Keep should be greater than one, to truncate a logfile use taskTruncateLog($logfile).');
