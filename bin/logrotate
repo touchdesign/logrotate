@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Console\Application;
+use Touchdesign\Logrotate\Command\LogrotateRotateCommand;
+
+foreach ([__DIR__.'/../../autoload.php', __DIR__.'/../vendor/autoload.php', __DIR__.'/vendor/autoload.php'] as $file) {
+    if (file_exists($file)) {
+        require_once $file;
+        break;
+    }
+}
+
+if (!class_exists(Application::class)) {
+    fwrite(
+        STDERR,
+        'The "symfony/console" component is needed to run this command, please run composer install.'.PHP_EOL
+    );
+    exit(1);
+}
+
+(new Application())
+    ->add(new LogrotateRotateCommand())
+    ->getApplication()
+    ->setDefaultCommand(LogrotateRotateCommand::NAME, true)
+    ->run();

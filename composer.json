@@ -2,7 +2,8 @@
   "name": "touchdesign/logrotate",
   "authors": [
     {
-      "name": "Christin Gruber"
+      "name": "Christin Gruber",
+      "email": "c.gruber@touchdesign.de"
     }
   ],
   "license": "proprietary",
@@ -14,7 +15,8 @@
     "symfony/filesystem": "^5.2",
     "symfony/finder": "^5.2",
     "symfony/monolog-bundle": "^3.6",
-    "monolog/monolog": "^2.1"
+    "monolog/monolog": "^2.1",
+    "symfony/console": "^5.2"
   },
   "autoload": {
     "psr-4": {
