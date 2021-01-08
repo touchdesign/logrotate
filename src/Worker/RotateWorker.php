@@ -33,7 +33,7 @@ class RotateWorker implements WorkerInterface
     public function run(int $keep = self::KEEP): bool
     {
         if ($keep < 1) {
-            throw new InvalidArgumentException('Keep should be greater than one, to truncate a logfile use taskTruncateLog($logfile).');
+            throw new InvalidArgumentException('Keep should be greater than one, to clean up logfiles use purge.');
         }
 
         try {
